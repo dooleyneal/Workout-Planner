@@ -1,5 +1,6 @@
 package com.devmountain.workoutPlanner.entities;
 
+import com.devmountain.workoutPlanner.dtos.Exercises_EquipmentDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 public class Exercises_Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JsonBackReference
@@ -19,11 +20,11 @@ public class Exercises_Equipment {
     @JsonBackReference
     private Equipment equipment;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -43,12 +44,18 @@ public class Exercises_Equipment {
         this.equipment = equipment;
     }
 
-    public Exercises_Equipment(int id, Exercise exercise, Equipment equipment) {
+    public Exercises_Equipment(Long id, Exercise exercise, Equipment equipment) {
         this.id = id;
         this.exercise = exercise;
         this.equipment = equipment;
     }
 
     public Exercises_Equipment() {
+    }
+
+    public Exercises_Equipment(Exercises_EquipmentDto exercises_equipmentDto) {
+        if (exercises_equipmentDto.getId() != null) {
+            this.id = exercises_equipmentDto.getId();
+        }
     }
 }

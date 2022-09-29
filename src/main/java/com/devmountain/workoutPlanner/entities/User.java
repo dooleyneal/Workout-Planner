@@ -1,5 +1,6 @@
 package com.devmountain.workoutPlanner.entities;
 
+import com.devmountain.workoutPlanner.dtos.UserDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -73,5 +74,20 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public User(UserDto userDto) {
+        if (userDto.getId() != null) {
+            this.id = userDto.getId();
+        }
+        if (userDto.getName() != null) {
+            this.name = userDto.getName();
+        }
+        if (userDto.getUsername() != null) {
+            this.username = userDto.getUsername();
+        }
+        if (userDto.getPassword() != null) {
+            this.password = userDto.getPassword();
+        }
     }
 }

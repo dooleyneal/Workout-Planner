@@ -1,5 +1,6 @@
 package com.devmountain.workoutPlanner.entities;
 
+import com.devmountain.workoutPlanner.dtos.EquipmentDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -59,5 +60,14 @@ public class Equipment {
         this.id = id;
         this.name = name;
         this.exercises_equipmentsSet = exercises_equipmentsSet;
+    }
+
+    public Equipment(EquipmentDto equipmentDto) {
+        if (equipmentDto.getId() != null) {
+            this.id = equipmentDto.getId();
+        }
+        if (equipmentDto.getName() != null) {
+            this.name = equipmentDto.getName();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.devmountain.workoutPlanner.entities;
 
+import com.devmountain.workoutPlanner.dtos.ExerciseDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -22,10 +23,10 @@ public class Exercise {
     private String workout;
 
     @Column
-    private int sets;
+    private Long sets;
 
     @Column
-    private int reps;
+    private Long reps;
 
     @Column
     private double weight;
@@ -71,19 +72,19 @@ public class Exercise {
         this.workout = workout;
     }
 
-    public int getSets() {
+    public Long getSets() {
         return sets;
     }
 
-    public void setSets(int sets) {
+    public void setSets(Long sets) {
         this.sets = sets;
     }
 
-    public int getReps() {
+    public Long getReps() {
         return reps;
     }
 
-    public void setReps(int reps) {
+    public void setReps(Long reps) {
         this.reps = reps;
     }
 
@@ -135,7 +136,7 @@ public class Exercise {
         this.exercises_equipmentsSet = exercises_equipmentsSet;
     }
 
-    public Exercise(Long id, String name, String workout, int sets, int reps, double weight, double distance, double duration, double speed, User user, Set<Exercises_Equipment> exercises_equipmentsSet) {
+    public Exercise(Long id, String name, String workout, Long sets, Long reps, double weight, double distance, double duration, double speed, User user, Set<Exercises_Equipment> exercises_equipmentsSet) {
         this.id = id;
         this.name = name;
         this.workout = workout;
@@ -152,5 +153,33 @@ public class Exercise {
 
 
     public Exercise() {
+    }
+
+    public Exercise(ExerciseDto exerciseDto) {
+        if (exerciseDto.getId() != null) {
+            this.id = exerciseDto.getId();
+        }
+        if (exerciseDto.getName() != null) {
+            this.name = exerciseDto.getName();
+        }
+        if (exerciseDto.getWorkout() != null) {
+            this.workout = exerciseDto.getWorkout();
+        }
+        if (exerciseDto.getSets() != null) {
+            this.sets = exerciseDto.getSets();
+        }
+        if (exerciseDto.getReps() != null) {
+            this.reps = exerciseDto.getReps();
+        }
+        if (exerciseDto.getWeight() != 0) {
+            this.weight = exerciseDto.getWeight();
+        }
+        if (exerciseDto.getDuration() != 0) {
+            this.duration = exerciseDto.getDuration();
+        }
+        if (exerciseDto.getDistance() != 0) {
+            this.distance = exerciseDto.getDistance();
+        }
+
     }
 }
