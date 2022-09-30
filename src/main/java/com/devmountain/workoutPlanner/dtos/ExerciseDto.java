@@ -21,6 +21,7 @@ public class ExerciseDto implements Serializable {
     private double weight;
     private double duration;
     private double distance;
+    private double speed;
     private UserDto userDto;
     private Set<Exercises_EquipmentDto> exercises_equipmentDtoSet = new HashSet<>();
 
@@ -51,4 +52,6 @@ public class ExerciseDto implements Serializable {
         }
 
     }
+
+
 }

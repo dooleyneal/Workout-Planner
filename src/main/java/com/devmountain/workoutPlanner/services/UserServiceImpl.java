@@ -1,16 +1,19 @@
 package com.devmountain.workoutPlanner.services;
 
 import com.devmountain.workoutPlanner.dtos.UserDto;
+import com.devmountain.workoutPlanner.entities.User;
 import com.devmountain.workoutPlanner.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -18,9 +21,33 @@ public class UserServiceImpl {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Override
     @Transactional
-    public List<String> addUser (UserDto userDto) {
+    public List<String> addUser(UserDto userDto) {
+        List<String> response = new ArrayList<>();
+        User user = new User(userDto);
+        userRepository.saveAndFlush(user);
+        response.add("User added Successfully");
+        return response;
+    }
 
-        return null;
+    @Override
+    public List<String> userLogin(UserDto userDto) {
+        List<String> response = new ArrayList<>();
+        Optional<User> userOptional = userRepository.findByUsername(userDto.getUsername());
+
+        if(userOptional.isPresent()) {
+            if(passwordEncoder.matches(userDto.getPassword(), userOptional.get().getPassword())) {
+                response.add("User Login Successful");
+                response.add(String.valueOf(userOptional.get().getId()));
+            }
+            else {
+                response.add("Username or Password incorrect");
+            }
+        }
+        else {
+            response.add("Username or Password incorrect");
+        }
+        return response;
     }
 }
