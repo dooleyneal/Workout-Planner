@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ExerciseServiceImpl implements ExerciseService {
@@ -62,5 +64,14 @@ public class ExerciseServiceImpl implements ExerciseService {
             return Optional.of(new ExerciseDto(exerciseOptional.get()));
         }
         return Optional.empty();
+    }
+
+    public List<ExerciseDto> getAllExercisesByUserId(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            List<Exercise> exerciseList = exerciseRepository.findAllByUserEquals(userOptional.get());
+            return exerciseList.stream().map(exercise -> new ExerciseDto(exercise)).collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 }

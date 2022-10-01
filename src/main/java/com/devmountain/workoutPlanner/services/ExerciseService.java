@@ -3,6 +3,7 @@ package com.devmountain.workoutPlanner.services;
 import com.devmountain.workoutPlanner.dtos.ExerciseDto;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ExerciseService {
@@ -16,4 +17,6 @@ public interface ExerciseService {
     void updateExerciseById(ExerciseDto exerciseDto);
 
     Optional<ExerciseDto> getExerciseById(Long exerciseId);
+
+    List<ExerciseDto> getAllExercisesByUserId(Long userId);
 }
