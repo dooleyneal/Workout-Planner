@@ -19,8 +19,6 @@ public class Exercise {
     @Column
     private String name;
 
-    @Column
-    private String workout;
 
     @Column
     private Long sets;
@@ -42,11 +40,7 @@ public class Exercise {
 
     @ManyToOne
     @JsonBackReference
-    private User user;
-
-    @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonManagedReference
-    private Set<Exercises_Equipment> exercises_equipmentsSet = new HashSet<>();
+    private Workout workout;
 
     public Long getId() {
         return id;
@@ -62,14 +56,6 @@ public class Exercise {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getWorkout() {
-        return workout;
-    }
-
-    public void setWorkout(String workout) {
-        this.workout = workout;
     }
 
     public Long getSets() {
@@ -120,34 +106,24 @@ public class Exercise {
         this.speed = speed;
     }
 
-    public User getUser() {
-        return user;
+    public Workout getWorkout() {
+        return workout;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setWorkout(Workout workout) {
+        this.workout = workout;
     }
 
-    public Set<Exercises_Equipment> getExercises_equipmentsSet() {
-        return exercises_equipmentsSet;
-    }
-
-    public void setExercises_equipmentsSet(Set<Exercises_Equipment> exercises_equipmentsSet) {
-        this.exercises_equipmentsSet = exercises_equipmentsSet;
-    }
-
-    public Exercise(Long id, String name, String workout, Long sets, Long reps, double weight, double distance, double duration, double speed, User user, Set<Exercises_Equipment> exercises_equipmentsSet) {
+    public Exercise(Long id, String name, Long sets, Long reps, double weight, double distance, double duration, double speed, Workout workout) {
         this.id = id;
         this.name = name;
-        this.workout = workout;
         this.sets = sets;
         this.reps = reps;
         this.weight = weight;
         this.distance = distance;
         this.duration = duration;
         this.speed = speed;
-        this.user = user;
-        this.exercises_equipmentsSet = exercises_equipmentsSet;
+        this.workout = workout;
     }
 
 
@@ -161,9 +137,6 @@ public class Exercise {
         }
         if (exerciseDto.getName() != null) {
             this.name = exerciseDto.getName();
-        }
-        if (exerciseDto.getWorkout() != null) {
-            this.workout = exerciseDto.getWorkout();
         }
         if (exerciseDto.getSets() != null) {
             this.sets = exerciseDto.getSets();

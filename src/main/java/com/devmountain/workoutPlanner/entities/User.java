@@ -26,7 +26,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonManagedReference
-    private Set<Exercise> exerciseSet = new HashSet<>();
+    private Set<Workout> workoutSet = new HashSet<>();
 
     public User() {
     }

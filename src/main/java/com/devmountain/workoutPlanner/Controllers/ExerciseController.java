@@ -1,9 +1,7 @@
 package com.devmountain.workoutPlanner.Controllers;
 
 import com.devmountain.workoutPlanner.dtos.ExerciseDto;
-import com.devmountain.workoutPlanner.entities.Exercise;
 import com.devmountain.workoutPlanner.services.ExerciseService;
-import com.devmountain.workoutPlanner.services.ExerciseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +15,12 @@ public class ExerciseController {
     @Autowired
     private ExerciseService exerciseService;
 
-    @GetMapping("/user/{userId}")
-    public List<ExerciseDto> getExercisesByUser(@PathVariable Long userId) {
-        return exerciseService.getAllExercisesByUserId(userId);
+    @GetMapping("/workout/{workoutId}")
+    public List<ExerciseDto> getExercisesByWorkout(@PathVariable Long workoutId) {
+        return exerciseService.getAllExercisesByWorkoutId(workoutId);
     }
 
-    @PostMapping("/user/{userId}")
+    @PostMapping("/workout/{workoutId}")
     public void addExercise(@RequestBody ExerciseDto exerciseDto, @PathVariable Long userId) {
         exerciseService.addExercise(exerciseDto, userId);
     }

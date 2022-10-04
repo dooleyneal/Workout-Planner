@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ExerciseService {
     @Transactional
-    void addExercise(ExerciseDto exerciseDto, Long userId);
+    void addExercise(ExerciseDto exerciseDto, Long workoutId);
 
     @Transactional
     void deleteExerciseById(Long exerciseId);
@@ -18,5 +18,5 @@ public interface ExerciseService {
 
     Optional<ExerciseDto> getExerciseById(Long exerciseId);
 
-    List<ExerciseDto> getAllExercisesByUserId(Long userId);
+    List<ExerciseDto> getAllExercisesByWorkoutId(Long workoutId);
 }

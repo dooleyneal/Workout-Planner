@@ -3,8 +3,10 @@ package com.devmountain.workoutPlanner.services;
 import com.devmountain.workoutPlanner.dtos.ExerciseDto;
 import com.devmountain.workoutPlanner.entities.Exercise;
 import com.devmountain.workoutPlanner.entities.User;
+import com.devmountain.workoutPlanner.entities.Workout;
 import com.devmountain.workoutPlanner.repositories.ExerciseRepository;
 import com.devmountain.workoutPlanner.repositories.UserRepository;
+import com.devmountain.workoutPlanner.repositories.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,17 +20,17 @@ import java.util.stream.Collectors;
 public class ExerciseServiceImpl implements ExerciseService {
 
     @Autowired
-    private UserRepository userRepository;
+    private WorkoutRepository workoutRepository;
 
     @Autowired
     private ExerciseRepository exerciseRepository;
 
     @Override
     @Transactional
-    public void addExercise(ExerciseDto exerciseDto, Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
+    public void addExercise(ExerciseDto exerciseDto, Long workoutId) {
+        Optional<Workout> workoutOptional = workoutRepository.findById(workoutId);
         Exercise exercise = new Exercise(exerciseDto);
-        userOptional.ifPresent(exercise::setUser);
+        workoutOptional.ifPresent(exercise::setWorkout);
         exerciseRepository.saveAndFlush(exercise);
     }
 
@@ -45,7 +47,6 @@ public class ExerciseServiceImpl implements ExerciseService {
         Optional<Exercise> exerciseOptional = exerciseRepository.findById(exerciseDto.getId());
         exerciseOptional.ifPresent(exercise -> {
             exercise.setName(exerciseDto.getName());
-            exercise.setWorkout(exerciseDto.getWorkout());
             exercise.setSets(exerciseDto.getSets());
             exercise.setReps(exerciseDto.getReps());
             exercise.setWeight(exerciseDto.getWeight());
@@ -66,10 +67,11 @@ public class ExerciseServiceImpl implements ExerciseService {
         return Optional.empty();
     }
 
-    public List<ExerciseDto> getAllExercisesByUserId(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isPresent()) {
-            List<Exercise> exerciseList = exerciseRepository.findAllByUserEquals(userOptional.get());
+    @Override
+    public List<ExerciseDto> getAllExercisesByWorkoutId(Long workoutId) {
+        Optional<Workout> workoutOptional = workoutRepository.findById(workoutId);
+        if (workoutOptional.isPresent()) {
+            List<Exercise> exerciseList = exerciseRepository.findAllByWorkoutEquals(workoutOptional.get());
             return exerciseList.stream().map(exercise -> new ExerciseDto(exercise)).collect(Collectors.toList());
         }
         return Collections.emptyList();
