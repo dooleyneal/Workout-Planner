@@ -1,17 +1,17 @@
-const registerForm = document.getElementById(`registerForm`)
-const registerName = document.getElementById(`registerName`)
-const registerUsername = document.getElementById(`registerUsername`)
-const registerPassword = document.getElementById(`registerPassword`)
-const confirmPassword = document.getElementById(`confirmPassword`)
+const registerForm = document.getElementById('registerForm')
+const registerName = document.getElementById('registerName')
+const registerUsername = document.getElementById('registerUsername')
+const registerPassword = document.getElementById('registerPassword')
+const confirmPassword = document.getElementById('confirmPassword')
 
 const headers = {
-    'Content Type': 'application.json'
+    'Content-Type': 'application/json'
 }
 
 const baseUrl = `http://localhost:8080/api/v1/users`
 
 const handleSubmit = async (e) => {
-    e.preventDefault
+    e.preventDefault()
     
 
     if (registerName.value === '' || registerUsername.value === '' || registerPassword.value === '') {
@@ -28,7 +28,6 @@ const handleSubmit = async (e) => {
             username: registerUsername.value,
             password: registerPassword.value
         }
-        console.log(bodyObj)
 
         const response = await fetch(`${baseUrl}/register`, {
             method: "POST",
@@ -45,4 +44,4 @@ const handleSubmit = async (e) => {
     }
 }
 
-registerForm.addEventListener("submit", handleSubmit())
+registerForm.addEventListener("submit", handleSubmit)
