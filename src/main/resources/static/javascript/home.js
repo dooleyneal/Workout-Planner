@@ -58,14 +58,16 @@ async function getWorkouts(userId) {
         headers: headers
     })
     .then(response => response.json())
-    .then(data => createWorkoutCards(data))
+    .then(data => {
+        console.log(data)
+        createWorkoutCards(data)})
     .catch(err => console.error(err))
 }
 
-const createWorkoutCards = (array) => {
+const createWorkoutCards = async (array) => {
     workoutContainer.innerHTML = ''
     workoutSelect.innerHTML = ''
-    array.forEach(obj => {
+    array.forEach(async obj =>  {
         let workoutCard = document.createElement("div")
         
         workoutCard.setAttribute("id", obj.id)
@@ -77,6 +79,8 @@ const createWorkoutCards = (array) => {
         </div>`
         
         workoutContainer.appendChild(workoutCard)
+
+        await getExercisesByWorkoutId(obj.id)
 
         
         const workoutOption = document.createElement("option")
@@ -90,9 +94,9 @@ const createWorkoutCards = (array) => {
 
 async function addExerciseHandleSubmit(e) {
     e.preventDefault()
-    //console.log(workoutSelect.value)
+    
     id = workoutSelect.value
-    //console.log(id)
+    console.log(id)
     bodyObj = {
         name: addExerciseName.value,
         sets: addExerciseSets.value,
@@ -102,7 +106,8 @@ async function addExerciseHandleSubmit(e) {
         duration: addExerciseDuration.value,
         speed: addExerciseSpeed.value
     }
-    //console.log(id)
+    console.log(addExerciseName.value)
+    
 
     await addExerciseToWorkout(id, bodyObj)
     addExerciseName.value = ''
@@ -115,7 +120,7 @@ async function addExerciseHandleSubmit(e) {
 }
 
 async function addExerciseToWorkout(id, bodyObj) {
-    //console.log(id)
+    console.log(id)
     const response = await fetch(`${baseExerciseUrl}/workout/${id}`, {
         method: "POST",
         body: JSON.stringify(bodyObj),
@@ -123,9 +128,72 @@ async function addExerciseToWorkout(id, bodyObj) {
     })
     .catch(err => console.error(err.message))
     if (response.status == 200) {
-        alert("Success")
+        getWorkouts(userId)
     }
 }
+
+async function getExercisesByWorkoutId(id) {
+    console.log(id)
+    await fetch(`${baseExerciseUrl}/workout/${id}`, {
+        method: "GET",
+        headers: headers
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        createExercises(data, id)
+    })
+    .catch(err => console.error(err.message))
+}
+
+function createExercises(array, workoutId) {
+    console.log(array)
+    array.forEach(obj => {
+        const workoutCard = document.getElementById(`${workoutId}`)
+        console.log(workoutCard)
+        const exercise = document.createElement("div")
+        exercise.setAttribute("id", `${obj.id}`)
+        exercise.setAttribute("class", "exercise")
+        exercise.innerHTML = `<p class="exerciceElement">${obj.name}</p>
+        <p class="exerciseElement">${obj.sets}</p>
+        <p class="exerciseElement">${obj.reps}</p>
+        <p class="exerciseElement">${obj.weight}</p>
+        <p class="exerciseElement">${obj.distance}</p>
+        <p class="exerciseElement">${obj.duration}</p>
+        <p class="exerciseElement">${obj.speed}</p>
+        <a href="http://www.youtube.com/results?search_query=${youtubeDemo(obj.name)}" target="_blank" rel="noopener noreferrer">demo</a>
+        <button type="button" class="deleteExerciseButton" onclick="handleExerciseDelete(${obj.id})">x</button>`
+        workoutCard.appendChild(exercise)
+    })
+}
+
+function youtubeDemo(name) {
+    console.log(name)
+    const words = name.split(' ')
+    console.log(words)
+    demoString = ''
+    for(i=0; i < words.length; i++) {
+        if (i == 0) {
+            demoString += words[i]
+        }
+        else {
+            demoString += `+${words[i]}`
+        }
+    }
+    console.log(demoString)
+    return demoString
+}
+
+async function handleExerciseDelete(id) {
+    await fetch(`${baseExerciseUrl}/${id}`, {
+        method: "DELETE",
+        headers: headers
+    })
+    .catch(err => console.error(err))
+
+    return getWorkouts(userId)
+}
+
 async function handleWorkoutDelete(workoutId) {
     await fetch(`${baseWorkoutUrl}/${workoutId}`, {
         method: "DELETE",
@@ -138,5 +206,5 @@ async function handleWorkoutDelete(workoutId) {
 
 getWorkouts(userId)
 
-addExerciseButton.addEventListener("click", addExerciseToWorkout)
+addExerciseButton.addEventListener("click", addExerciseHandleSubmit)
 newWorkoutForm.addEventListener("submit", handleWorkoutSubmit)

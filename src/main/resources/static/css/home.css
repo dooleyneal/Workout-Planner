@@ -14,3 +14,13 @@
 .addExerciseButton {
     font-size: medium;
 }
+
+.exercise {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.deleteExerciseButton {
+    margin-bottom: 10px;
+}
+
