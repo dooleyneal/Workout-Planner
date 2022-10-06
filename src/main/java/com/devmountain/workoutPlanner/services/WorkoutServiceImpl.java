@@ -1,6 +1,7 @@
 package com.devmountain.workoutPlanner.services;
 
 import com.devmountain.workoutPlanner.dtos.WorkoutDto;
+import com.devmountain.workoutPlanner.entities.Exercise;
 import com.devmountain.workoutPlanner.entities.User;
 import com.devmountain.workoutPlanner.entities.Workout;
 import com.devmountain.workoutPlanner.repositories.UserRepository;
@@ -15,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class WorkoutServiceImpl implements WorkoutService {
+public class WorkoutServiceImpl implements WorkoutService{
 
     @Autowired private UserRepository userRepository;
     @Autowired private WorkoutRepository workoutRepository;
@@ -33,7 +34,9 @@ public class WorkoutServiceImpl implements WorkoutService {
     @Transactional
     public void deleteWorkoutById(Long workoutId) {
         Optional<Workout> workoutOptional = workoutRepository.findById(workoutId);
-        workoutOptional.ifPresent(workout -> workoutRepository.delete(workout));
+        workoutOptional.ifPresent(workout -> {
+        workoutRepository.delete(workout);
+    }); 
     }
 
     @Override

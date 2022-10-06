@@ -1,0 +1,16 @@
+.workoutCard {
+    border: black;
+    border-style: solid;
+    width: 500px;
+    left: 400px;
+    margin: 15px;
+}
+
+.workoutDeleteBtn {
+    width: 30px;
+    height: 30px;
+}
+
+.addExerciseButton {
+    font-size: medium;
+}

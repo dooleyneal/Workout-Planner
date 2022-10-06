@@ -1,0 +1,7 @@
+
+.heading {
+    top: 0px;
+    height: 100px;
+    width: max-content;
+    z-index: 1;
+}

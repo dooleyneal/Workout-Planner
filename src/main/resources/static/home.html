@@ -6,8 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" href="./css/home.css">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/home.css">
     <title>Home</title>
 </head>
 <body>
@@ -26,6 +27,19 @@
     </form>
 
     <div id="workoutContainer"></div>
+
+    <form id="addExercise">
+        <label for="workoutSelect">Choose Your Workout</label>
+        <select id="workoutSelect"></select>
+        <input type="text" id="addExerciseName" class="addExerciseValue" placeholder="New Exercise Name">
+        <input type="text" id="addExerciseSets" class="addExerciseValue" placeholder="Sets">
+        <input type="text" id="addExerciseReps" class="addExerciseValue" placeholder="Reps">
+        <input type="text" id="addExerciseWeight" class="addExerciseValue" placeholder="Weight">
+        <input type="text" id="addExerciseDistance" class="addExerciseValue" placeholder="Distance">
+        <input type="text" id="addExerciseDuration" class="addExerciseValue" placeholder="Duration">
+        <input type="text" id="addExerciseSpeed" class="addExerciseValue" placeholder="Speed">
+        <button type="button" id="addExerciseButton">Add Exercise</button>
+    </form>
 
     <script src="./javascript/home.js" type="application/javascript"></script>
 </body>

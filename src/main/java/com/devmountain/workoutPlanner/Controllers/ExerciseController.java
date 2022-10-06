@@ -21,8 +21,8 @@ public class ExerciseController {
     }
 
     @PostMapping("/workout/{workoutId}")
-    public void addExercise(@RequestBody ExerciseDto exerciseDto, @PathVariable Long userId) {
-        exerciseService.addExercise(exerciseDto, userId);
+    public void addExercise(@RequestBody ExerciseDto exerciseDto, @PathVariable Long workoutId) {
+        exerciseService.addExercise(exerciseDto, workoutId);
     }
 
     @DeleteMapping("/{exerciseId}")

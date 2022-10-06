@@ -17,7 +17,7 @@ public class UserDto implements Serializable {
     private String name;
     private String username;
     private String password;
-    private Set<ExerciseDto> exerciseDtoSet = new HashSet<>();
+    private Set<WorkoutDto> workoutDtoSet = new HashSet<>();
 
     public UserDto(User user) {
         if (user.getId() != null) {

@@ -1,5 +1,6 @@
 package com.devmountain.workoutPlanner.dtos;
 
+import com.devmountain.workoutPlanner.entities.User;
 import com.devmountain.workoutPlanner.entities.Workout;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +15,7 @@ import java.util.Set;
 public class WorkoutDto {
     private Long id;
     private String name;
+    private UserDto userDto;
     private Set<ExerciseDto> exerciseDtoSet = new HashSet<>();
 
     public WorkoutDto(Workout workout) {
