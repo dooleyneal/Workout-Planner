@@ -64,6 +64,7 @@ async function getWorkouts(userId) {
 
 const createWorkoutCards = (array) => {
     workoutContainer.innerHTML = ''
+    workoutSelect.innerHTML = ''
     array.forEach(obj => {
         let workoutCard = document.createElement("div")
         
@@ -77,6 +78,7 @@ const createWorkoutCards = (array) => {
         
         workoutContainer.appendChild(workoutCard)
 
+        
         const workoutOption = document.createElement("option")
         workoutOption.setAttribute("value", obj.id)
         workoutOption.innerHTML = `${obj.name}`
